@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubernates_example
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: kubernates_example
+    spec:
+      containers:
+        - name: kubernates_example
+          image: gcr.io/citric-lead-272713/kubernates_example
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernates_example-service
+  labels:
+    name: kubernates_example-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: kubernates_example
+  type: LoadBalancer
